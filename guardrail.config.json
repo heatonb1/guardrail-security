@@ -1,0 +1,71 @@
+{
+  "baseline": {
+    "directory": ".guardrail",
+    "path": ".guardrail/baseline.json",
+    "privateKeyPath": ".guardrail/baseline-private.pem",
+    "publicKeyPath": ".guardrail/baseline-public.pem"
+  },
+  "scan": {
+    "riskThreshold": 70,
+    "failOnSeverity": "high",
+    "trustedPackages": [
+      "axios",
+      "react",
+      "next"
+    ],
+    "ignoreDirs": [
+      "fixtures",
+      "vendor"
+    ],
+    "maxScriptFileBytes": 256000,
+    "trustedScriptPackages": [
+      "fsevents",
+      "esbuild",
+      "turbo"
+    ]
+  },
+  "customIocs": [],
+  "tokenPolicy": {
+    "staleAfterDays": 30,
+    "mixedModeAllowed": false
+  },
+  "github": {
+    "owner": "your-org",
+    "repo": "your-repo",
+    "tokenEnvVar": "GITHUB_TOKEN"
+  },
+  "monitor": {
+    "packages": [
+      "axios"
+    ],
+    "pollIntervalMs": 25000,
+    "slackWebhook": "",
+    "webhook": "",
+    "email": {
+      "host": "smtp.example.com",
+      "port": 587,
+      "secure": false,
+      "username": "smtp-user",
+      "password": "smtp-password",
+      "from": "guardrail@example.com",
+      "to": [
+        "secops@example.com"
+      ]
+    }
+  },
+  "notifications": {
+    "slackWebhook": "",
+    "webhook": "",
+    "email": {
+      "host": "smtp.example.com",
+      "port": 587,
+      "secure": false,
+      "username": "smtp-user",
+      "password": "smtp-password",
+      "from": "guardrail@example.com",
+      "to": [
+        "secops@example.com"
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+name: guardrail
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  guardrail:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install GuardRail
+        run: npm install -g guardrail-security
+
+      - name: Run GuardRail scan before dependency install
+        run: guardrail scan --fail-fast --sarif guardrail.sarif
+
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+
+      - name: Upload GuardRail SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: guardrail.sarif

@@ -1,0 +1,23 @@
+declare module 'node:fs';
+declare module 'node:fs/promises';
+declare module 'node:path';
+declare module 'node:os';
+declare module 'node:crypto';
+declare module 'node:child_process';
+declare module 'node:zlib';
+declare module 'node:net';
+declare module 'node:tls';
+declare module 'node:url';
+declare module 'node:timers/promises';
+declare module 'node:stream';
+declare module 'node:stream/promises';
+declare module 'node:util';
+declare module 'node:events';
+
+declare const process: any;
+declare const console: any;
+declare const Buffer: any;
+declare function setTimeout(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): any;
+declare function clearTimeout(handle: any): void;
+declare function setInterval(handler: (...args: any[]) => void, timeout?: number, ...args: any[]): any;
+declare function clearInterval(handle: any): void;

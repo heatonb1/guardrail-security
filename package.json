@@ -1,0 +1,58 @@
+{
+  "name": "guardrail-security",
+  "version": "0.1.0",
+  "description": "npm supply chain security guardian — detects ghost dependencies, scores install script behavior, catches the axios blind spot, and blocks known malicious packages before they execute",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "./dist/src/index.js",
+  "bin": {
+    "guardrail": "./dist/src/index.js",
+    "guardrail-security": "./dist/src/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "INSTALL.md",
+    "guardrail.config.json",
+    ".github/workflows/guardrail.yml"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "start": "node ./dist/src/index.js",
+    "scan": "node ./dist/src/index.js scan",
+    "monitor": "node ./dist/src/index.js monitor",
+    "audit-tokens": "node ./dist/src/index.js audit-tokens",
+    "verify": "node ./dist/src/index.js verify",
+    "incident": "node ./dist/src/index.js incident",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "security",
+    "supply-chain",
+    "npm",
+    "audit",
+    "provenance",
+    "ghost-dependency",
+    "slsa",
+    "guardrail",
+    "malware-detection",
+    "postinstall",
+    "lifecycle-scripts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guardrail-security/guardrail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guardrail-security/guardrail/issues"
+  },
+  "homepage": "https://github.com/guardrail-security/guardrail#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "typescript": "^5.8.3"
+  }
+}
