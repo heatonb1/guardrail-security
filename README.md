@@ -226,6 +226,6 @@ Key configuration fields:
 | `monitor.webhook` | Generic webhook for alerts |
 | `github.owner` / `github.repo` / `github.tokenEnvVar` | Defaults for incident log scanning |
 
-## License
+
 
 MIT -- see [LICENSE](LICENSE) for details.
