@@ -35,6 +35,7 @@ const RULES: Rule[] = [
       /\bcmd(?:\.exe)?\b/i,
       /\bbash\b/i,
       /\bsh\s+-c\b/i,
+      /\|\s*\b(sh|bash|zsh|node|python3?|ruby|perl)\b/i,
       /\bosascript\b/i,
       /\bpython3?\b/i,
       /\bnode\s+[^\n]+\.[cm]?[jt]s\b/i,
@@ -46,11 +47,16 @@ const RULES: Rule[] = [
     reason: 'dynamic code execution or decoding',
     patterns: [
       /\beval\s*\(/i,
+      // Detects "new Function" constructor used for dynamic code execution in malicious scripts
       /\bnew Function\b/i,
       /\bvm\./i,
       /\batob\s*\(/i,
       /Buffer\.from\([^\)]*base64/i,
       /fromCharCode\s*\(/i,
+      /\bnode\s+(?:-e|--eval)\b/i,
+      /\bpython3?\s+-c\b/i,
+      /\bruby\s+-e\b/i,
+      /\bperl\s+-e\b/i,
     ],
   },
   {
@@ -265,6 +271,24 @@ function calculateCompoundBonus(matchedRuleIds: string[]): { bonus: number; reas
   if (ids.has('credential-access') && ids.has('network')) {
     bonus += 20;
     reasons.push('compound: credential access + network (credential exfiltration)');
+  }
+
+  // Network + process-spawn = remote code execution pipeline
+  if (ids.has('network') && ids.has('process-spawn')) {
+    bonus += 15;
+    reasons.push('compound: network + process spawning (remote code execution pipeline)');
+  }
+
+  // Network + eval = dynamic remote payload execution
+  if (ids.has('network') && ids.has('eval')) {
+    bonus += 15;
+    reasons.push('compound: network + dynamic execution (remote payload evaluation)');
+  }
+
+  // Process-spawn + eval = shell-based code injection
+  if (ids.has('process-spawn') && ids.has('eval')) {
+    bonus += 10;
+    reasons.push('compound: process spawning + dynamic execution (shell-based code injection)');
   }
 
   return { bonus, reasons };

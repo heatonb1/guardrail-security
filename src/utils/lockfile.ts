@@ -73,7 +73,7 @@ function parsePackageLock(filePath: string): LockfileInfo {
         path: packagePath,
         dev: Boolean(metadata.dev),
         optional: Boolean(metadata.optional),
-        hasInstallScripts: Boolean(metadata.hasInstallScripts),
+        hasInstallScripts: Boolean(metadata.hasInstallScripts || metadata.hasInstallScript),
       });
     }
   } else if (data.dependencies && typeof data.dependencies === 'object') {
